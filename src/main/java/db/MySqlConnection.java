@@ -8,7 +8,7 @@ import com.mysql.cj.jdbc.Driver;
 
 public class MySqlConnection {
 
-	public static Connection getConncetion() {
+	public static Connection getConnection() {
 		
 		Connection connection = null;
 		

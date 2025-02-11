@@ -32,36 +32,7 @@ public class LoginServlet extends HttpServlet {
 		switch(btn) {
 		
 			case "Ingresar" : login(req, res); break;
-			case "Registrar" : register(req, res); break;
 		}
-	}
-	
-	private void register(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
-		String nombre = req.getParameter("nombre");
-		String apellido = req.getParameter("apellido");
-		String direccion = req.getParameter("direccion");
-		String correo = req.getParameter("correo");
-		String pass = req.getParameter("pass");
-		String rol = req.getParameter("Rol");
-		LocalDate fechaNac = LocalDate.parse(req.getParameter("fechaNac"));
-		
-		Usuario user = new Usuario();
-		user.setNombreUsuario(nombre);
-		user.setApellidoUsuario(apellido);
-		user.setDireccionUsuario(direccion);
-		user.setCorreoUsuario(correo);
-		user.setPasswordUsuario(pass);
-		user.setRolUsuario(rol);
-		user.setFechaNac(fechaNac);
-		
-		UsuarioModelo usuarioModelo = new UsuarioModelo();
-		
-		usuarioModelo.createUsuario(user);
-		
-		usuarioModelo.getUsuarioById(2);
-		
-		req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -78,9 +49,12 @@ public class LoginServlet extends HttpServlet {
 		
 		Usuario user = usuarioModel.logUsuario(lgdto);
 		
-		HttpSession session = req.getSession();
-		session.setAttribute("users", user);
-		res.sendRedirect(req.getContextPath() + "/jsp/index.jsp");
-		//req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+		System.out.println(lgdto);
+		
+		//HttpSession session = req.getSession();
+		//session.setAttribute("users", user);
+		
+		req.setAttribute("users", user);
+		req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 	}
 }

@@ -12,6 +12,7 @@ public interface UsuarioInterface {
 	public boolean updateUsuario(Usuario usuario);
 	public boolean deleteUsuario(Integer id);
 	public Usuario getUsuarioById(Integer id);
-	public Usuario getUsuarioByEmail(String email);
+	public List<Usuario> getUsuariosByRol(String rol);
+	public Usuario getUsuarioByEmailAndPass(String email, String pass);
 	public Usuario logUsuario(LoginDto lgdto);
 }

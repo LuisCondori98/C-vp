@@ -4,15 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<title>My Page</title>
+	<meta charset="ISO-8859-1">
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/logo.jpg" type="image/x-icon">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<title>Clinica Vida Plena</title>
 </head>
 <body>
-	<header class="d-flex">
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<header class="d-flex justify-content-between">
+		<nav class="navbar navbar-expand-lg">
 		  <div class="container-fluid">
 		    <a class="navbar-brand" href="index.jsp">Clinica vida plena</a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -22,33 +24,32 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 		    <div class="collapse navbar-collapse" id="navbarNavDropdown">
 		      <ul class="navbar-nav">
 		        <li class="nav-item">
-		          <a class="nav-link active" aria-current="page" href="index.jsp">Inicio</a>
+		          <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/jsp/index.jsp">Inicio</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="contacto.jsp">Contacto</a>
+		          <a class="nav-link" href="${pageContext.request.contextPath}/jsp/contacto.jsp">Contacto</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="citas.jsp">Citas</a>
+		          <a class="nav-link" href="${pageContext.request.contextPath}/jsp/citas.jsp">Citas</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="nosotros.jsp">Nosotros</a>
+		          <a class="nav-link" href="${pageContext.request.contextPath}/jsp/nosotros.jsp">Nosotros</a>
 		        </li>
 		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="especialidades.jsp" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Especialidades
+		          <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/jsp/especialidades.jsp" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            Farmacia
 		          </a>
 		          <ul class="dropdown-menu">
-		            <li><a class="dropdown-item" href="#">Action</a></li>
-		            <li><a class="dropdown-item" href="#">Another action</a></li>
-		            <li><a class="dropdown-item" href="#">Something else here</a></li>
+		            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/MedicamentoServlet?action=list">Medicamentos</a></li>
 		          </ul>
 		        </li>
 		      </ul>
 		    </div>
 		  </div>
 		</nav>
-			<div class="d-flex" id="container-log">
-				<a href="login.jsp" class="btn btn-success m-2" id="logeo">Login</a>
-				<button class="btn btn-danger m-2" id="logout">Logout</button>
-			</div>
+		<div class="d-flex" id="container-log" >
+			<a href="${pageContext.request.contextPath}/jsp/login.jsp" class="btn btn-primary m-2" id="logeo">Login</a>
+			<a class="btn btn-success m-2" id="register" href="${pageContext.request.contextPath}/jsp/register.jsp">Register</a>
+			<button class="btn btn-danger m-2" id="logout">Logout</button>
+		</div>
 	</header>

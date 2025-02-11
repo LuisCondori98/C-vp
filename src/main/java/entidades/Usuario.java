@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Usuario {
 
-	private int IdUsuario;
+	private int IdUsuario, DniUsuario, TelefonoUsuario;
 	private String NombreUsuario, ApellidoUsuario, CorreoUsuario, PasswordUsuario, DireccionUsuario;
 	private String RolUsuario;
 	private LocalDate FechaNac;

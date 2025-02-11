@@ -3,6 +3,7 @@ package modelos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import DTO.LoginDto;
@@ -25,19 +26,21 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConncetion();
+			con = mySqlConnection.getConnection();
 			
-			String query = "INSERT INTO Usuario VALUES(null, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO Usuario VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			ps = con.prepareStatement(query);
 			
-			ps.setString(1, usuario.getNombreUsuario());
-			ps.setString(2, usuario.getApellidoUsuario());
-			ps.setString(3,	usuario.getDireccionUsuario());
-			ps.setString(4, usuario.getCorreoUsuario());
-			ps.setString(5, usuario.getPasswordUsuario());
-			ps.setString(6, usuario.getRolUsuario());
-			ps.setDate(7, java.sql.Date.valueOf(usuario.getFechaNac()));
+			ps.setInt(1, usuario.getDniUsuario());
+			ps.setString(2, usuario.getNombreUsuario());
+			ps.setString(3, usuario.getApellidoUsuario());
+			ps.setInt(4, usuario.getTelefonoUsuario());
+			ps.setString(5,	usuario.getDireccionUsuario());
+			ps.setString(6, usuario.getCorreoUsuario());
+			ps.setString(7, usuario.getPasswordUsuario());
+			ps.setString(8, usuario.getRolUsuario());
+			ps.setDate(9, java.sql.Date.valueOf(usuario.getFechaNac()));
 			
 			value = ps.executeUpdate();
 			
@@ -65,20 +68,153 @@ public class UsuarioModelo implements UsuarioInterface {
 
 	@Override
 	public List<Usuario> readUsuarios() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Usuario> usuarios = new ArrayList<>();
+		
+		Connection con = null;
+		
+		PreparedStatement ps = null;
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			con = mySqlConnection.getConnection();
+			
+			String query = "SELECT * FROM Usuario";
+			
+			ps = con.prepareStatement(query);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Usuario usuario = new Usuario();
+				
+				usuario.setIdUsuario(rs.getInt("IdUsuario"));
+				usuario.setDniUsuario(rs.getInt("DniUsuario"));
+				usuario.setNombreUsuario(rs.getString("NombreUsuario"));
+				usuario.setApellidoUsuario(rs.getString("ApellidoUsuario"));
+				usuario.setTelefonoUsuario(rs.getInt("TelefonoUsuario"));
+				usuario.setDireccionUsuario(rs.getString("DireccionUsuario"));
+				usuario.setCorreoUsuario(rs.getString("CorreoUsuario"));
+				usuario.setRolUsuario(rs.getString("RolUsuario"));
+				usuario.setFechaNac(rs.getDate("FechaNac").toLocalDate());
+				
+				usuarios.add(usuario);
+			}
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			
+			try {
+				
+				if (ps != null)
+					
+					ps.close();
+				if (con != null)
+					
+					con.close();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		return usuarios;
 	}
 
 	@Override
 	public boolean updateUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean success = false;
+		
+		Connection con = null;
+		
+		PreparedStatement ps = null;
+		
+		try {
+			
+			con = mySqlConnection.getConnection();
+			
+			String query = "UPDATE Usuario SET NombreUsuario = ?, ApellidoUsuario = ?, TelefonoUsuario = ?, DireccionUsuario = ?, CorreoUsuario = ?, FechaNac = ? WHERE IdUsuario = ?";
+			
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, usuario.getNombreUsuario());
+			ps.setString(2, usuario.getApellidoUsuario());
+			ps.setInt(3, usuario.getTelefonoUsuario());
+			ps.setString(4, usuario.getDireccionUsuario());
+			ps.setString(5, usuario.getCorreoUsuario());
+			ps.setDate(6, java.sql.Date.valueOf(usuario.getFechaNac()));
+			
+			success = ps.executeUpdate() > 0;
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();			
+		} finally {
+			
+			try {
+				
+				if (ps != null)
+					
+					ps.close();
+				if (con != null)
+					
+					con.close();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
 	}
 
 	@Override
 	public boolean deleteUsuario(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean success = false;
+		
+		Connection con = null;
+		
+		PreparedStatement ps = null;
+		
+		try {
+			
+			con = mySqlConnection.getConnection();
+			
+			String query = "DELETE FROM Usuario WHERE IdCliente = ?";
+			
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			
+			success = ps.executeUpdate() > 0;
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();			
+		} finally {
+			
+			try {
+				
+				if (ps != null)
+					
+					ps.close();
+				if (con != null)
+					
+					con.close();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
 	}
 	
 	@Override
@@ -92,7 +228,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConncetion();
+			con = mySqlConnection.getConnection();
 			
 			String query = "SELECT * FROM Usuario WHERE IdUsuario = ?";
 			
@@ -107,8 +243,10 @@ public class UsuarioModelo implements UsuarioInterface {
 				usuario = new Usuario();
 				
 				usuario.setIdUsuario(rs.getInt("IdUsuario"));
+				usuario.setDniUsuario(rs.getInt("DniUsuario"));
 				usuario.setNombreUsuario(rs.getString("NombreUsuario"));
 				usuario.setApellidoUsuario(rs.getString("ApellidoUsuario"));
+				usuario.setTelefonoUsuario(rs.getInt("TelefonoUsuario"));
 				usuario.setDireccionUsuario(rs.getString("DireccionUsuario"));
 				usuario.setCorreoUsuario(rs.getString("CorreoUsuario"));
 				usuario.setPasswordUsuario(rs.getString("PasswordUsuario"));
@@ -141,7 +279,67 @@ public class UsuarioModelo implements UsuarioInterface {
 	}
 	
 	@Override
-	public Usuario getUsuarioByEmail(String email) {
+	public List<Usuario> getUsuariosByRol(String rol) {
+		
+		List<Usuario> usuarios = new ArrayList<>();
+		
+		Connection con = null;
+		
+		PreparedStatement ps = null;
+		
+		try {
+			
+			con = mySqlConnection.getConnection();
+			
+			String query = "SELECT * FROM Usuario WHERE RolUsuario = ?";
+			
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, rol);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Usuario usuario = new Usuario();
+				
+				usuario.setIdUsuario(rs.getInt("IdUsuario"));
+				usuario.setDniUsuario(rs.getInt("DniUsuario"));
+				usuario.setNombreUsuario(rs.getString("NombreUsuario"));
+				usuario.setApellidoUsuario(rs.getString("ApellidoUsuario"));
+				usuario.setTelefonoUsuario(rs.getInt("TelefonoUsuario"));
+				usuario.setDireccionUsuario(rs.getString("DireccionUsuario"));
+				usuario.setCorreoUsuario(rs.getString("CorreoUsuario"));
+				usuario.setRolUsuario(rs.getString("RolUsuario"));
+				usuario.setFechaNac(rs.getDate("FechaNac").toLocalDate());
+				
+				usuarios.add(usuario);
+			}
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			
+			try {
+				
+				if (ps != null)
+					
+					ps.close();
+				if (con != null)
+					
+					con.close();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		return usuarios;
+	}
+	
+	@Override
+	public Usuario getUsuarioByEmailAndPass(String email, String pass) {
 		
 		Usuario usuario = null;
 		
@@ -151,13 +349,14 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConncetion();
+			con = mySqlConnection.getConnection();
 			
-			String query = "SELECT * FROM Usuario WHERE CorreoUsuario = ?";
+			String query = "SELECT * FROM Usuario WHERE CorreoUsuario = ? AND PasswordUsuario = ?";
 			
 			ps = con.prepareStatement(query);
 			
 			ps.setString(1, email);
+			ps.setString(2, pass);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -166,8 +365,10 @@ public class UsuarioModelo implements UsuarioInterface {
 				usuario = new Usuario();
 				
 				usuario.setIdUsuario(rs.getInt("IdUsuario"));
+				usuario.setDniUsuario(rs.getInt("DniUsuario"));
 				usuario.setNombreUsuario(rs.getString("NombreUsuario"));
 				usuario.setApellidoUsuario(rs.getString("ApellidoUsuario"));
+				usuario.setTelefonoUsuario(rs.getInt("TelefonoUsuario"));
 				usuario.setDireccionUsuario(rs.getString("DireccionUsuario"));
 				usuario.setCorreoUsuario(rs.getString("CorreoUsuario"));
 				usuario.setPasswordUsuario(rs.getString("PasswordUsuario"));
@@ -204,7 +405,8 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			usuario = getUsuarioByEmail(lgdto.getCorreo());
+			usuario = getUsuarioByEmailAndPass(lgdto.getCorreo(), lgdto.getPassword());
+			lgdto.setIdUsuario(usuario.getIdUsuario());
 		} catch(Exception e) {
 			
 			e.printStackTrace();
