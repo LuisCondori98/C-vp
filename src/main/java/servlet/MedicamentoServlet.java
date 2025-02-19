@@ -73,7 +73,7 @@ public class MedicamentoServlet extends HttpServlet {
 
         System.out.println(nombre + precio + stock + fechaVencimiento + imagenPart + imagenPath);
         
-        /*if (imagenPart != null) {
+        if (imagenPart != null) {
         
             String fileName = imagenPart.getSubmittedFileName();
 
@@ -103,7 +103,7 @@ public class MedicamentoServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath() + "/MedicamentoServlet?action=list");
         } else {
             res.getWriter().write("Error al crear medicamento.");
-        }*/
+        }
     }
 
     private void updateMedicamento(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
