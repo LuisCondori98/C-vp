@@ -15,4 +15,5 @@ public interface UsuarioInterface {
 	public List<Usuario> getUsuariosByRol(String rol);
 	public Usuario getUsuarioByEmailAndPass(String email, String pass);
 	public Usuario logUsuario(LoginDto lgdto);
+	public Usuario getUsuarioByEmail(String email);
 }

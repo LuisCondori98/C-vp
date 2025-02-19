@@ -46,7 +46,6 @@ public class AdminServlet extends HttpServlet {
 		UsuarioModelo usuarioModelo = new UsuarioModelo();
 		
 		List<Usuario> pacients = usuarioModelo.getUsuariosByRol("paciente");
-		System.out.println(pacients);
 		
 		req.setAttribute("pacientes", pacients);
 		req.getRequestDispatcher("/jsp/pacientes.jsp").forward(req, res);
@@ -54,7 +53,6 @@ public class AdminServlet extends HttpServlet {
 
 	private void listarDoctores(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
-		System.out.println("entro list admin servlet");
 		UsuarioModelo usuarioModelo = new UsuarioModelo();
 		
 		List<Usuario> doctores = usuarioModelo.getUsuariosByRol("doctor");

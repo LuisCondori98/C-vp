@@ -12,8 +12,6 @@ import entidades.Usuario;
 import interfaces.UsuarioInterface;
 
 public class UsuarioModelo implements UsuarioInterface {
-	
-	private MySqlConnection mySqlConnection;
 
 	@Override
 	public int createUsuario(Usuario usuario) {
@@ -26,7 +24,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
 			String query = "INSERT INTO Usuario VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
@@ -79,7 +77,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
 			String query = "SELECT * FROM Usuario";
 			
@@ -137,18 +135,20 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
-			String query = "UPDATE Usuario SET NombreUsuario = ?, ApellidoUsuario = ?, TelefonoUsuario = ?, DireccionUsuario = ?, CorreoUsuario = ?, FechaNac = ? WHERE IdUsuario = ?";
+			String query = "UPDATE Usuario SET DniUsuario = ?, NombreUsuario = ?, ApellidoUsuario = ?, TelefonoUsuario = ?, DireccionUsuario = ?, CorreoUsuario = ?, FechaNac = ? WHERE IdUsuario = ?";
 			
 			ps = con.prepareStatement(query);
 			
-			ps.setString(1, usuario.getNombreUsuario());
-			ps.setString(2, usuario.getApellidoUsuario());
-			ps.setInt(3, usuario.getTelefonoUsuario());
-			ps.setString(4, usuario.getDireccionUsuario());
-			ps.setString(5, usuario.getCorreoUsuario());
-			ps.setDate(6, java.sql.Date.valueOf(usuario.getFechaNac()));
+			ps.setInt(1, usuario.getDniUsuario());
+			ps.setString(2, usuario.getNombreUsuario());
+			ps.setString(3, usuario.getApellidoUsuario());
+			ps.setInt(4, usuario.getTelefonoUsuario());
+			ps.setString(5, usuario.getDireccionUsuario());
+			ps.setString(6, usuario.getCorreoUsuario());
+			ps.setDate(7, java.sql.Date.valueOf(usuario.getFechaNac()));
+			ps.setInt(8, usuario.getIdUsuario());
 			
 			success = ps.executeUpdate() > 0;
 			
@@ -185,9 +185,9 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
-			String query = "DELETE FROM Usuario WHERE IdCliente = ?";
+			String query = "DELETE FROM Usuario WHERE IdUsuario = ?";
 			
 			ps = con.prepareStatement(query);
 			
@@ -228,7 +228,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
 			String query = "SELECT * FROM Usuario WHERE IdUsuario = ?";
 			
@@ -289,7 +289,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
 			String query = "SELECT * FROM Usuario WHERE RolUsuario = ?";
 			
@@ -349,7 +349,7 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {
 			
-			con = mySqlConnection.getConnection();
+			con = MySqlConnection.getConnection();
 			
 			String query = "SELECT * FROM Usuario WHERE CorreoUsuario = ? AND PasswordUsuario = ?";
 			
@@ -412,6 +412,62 @@ public class UsuarioModelo implements UsuarioInterface {
 			e.printStackTrace();
 		}
 		
+		return usuario;
+	}
+
+	@Override
+	public Usuario getUsuarioByEmail(String email) {
+		
+		Usuario usuario = new Usuario();
+		
+		Connection con = null;
+		
+		PreparedStatement ps = null;
+		
+		try {
+			
+			con = MySqlConnection.getConnection();
+			
+			String query = "SELECT * FROM Usuario WHERE CorreoUsuario = ?";
+			
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, email);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				
+				usuario.setIdUsuario(rs.getInt("IdUsuario"));
+				usuario.setDniUsuario(rs.getInt("DniUsuario"));
+				usuario.setNombreUsuario(rs.getString("NombreUsuario"));
+				usuario.setApellidoUsuario(rs.getString("ApellidoUsuario"));
+				usuario.setTelefonoUsuario(rs.getInt("TelefonoUsuario"));
+				usuario.setDireccionUsuario(rs.getString("DireccionUsuario"));
+				usuario.setCorreoUsuario(rs.getString("CorreoUsuario"));
+				usuario.setRolUsuario(rs.getString("RolUsuario"));
+				usuario.setFechaNac(rs.getDate("FechaNac").toLocalDate());
+			}
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			
+			try {
+				
+				if (ps != null)
+					
+					ps.close();
+				if (con != null)
+					
+					con.close();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+		System.out.println(usuario);
 		return usuario;
 	}
 }

@@ -11,10 +11,12 @@
 					<h6><strong>Direccion:</strong> ${doctor.direccionUsuario}</h6>
 					<h6><strong>Correo:</strong> ${doctor.correoUsuario}</h6>
 					<h6><strong>Fecha Nac:</strong> ${doctor.fechaNac}</h6>
+					<a href="${pageContext.request.contextPath}/UserServlet?type=Buscar&id=${doctor.idUsuario}" class="btn btn-success">Editar</a>
 				</div>
 				</j:forEach>
 			</j:if>
 		</div>
+		<a href="${pageContext.request.contextPath}/jsp/crearuser.jsp" class="btn btn-primary">Registrar Doctor</a>
    	</main>
 <script src="${pageContext.request.contextPath}/js/doctores.js">
 </script>

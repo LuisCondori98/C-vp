@@ -1,6 +1,6 @@
 <%@ include file="header.jsp" %>
 	<main class="p-2">
-		<form action="${pageContext.request.contextPath}/UserServlet" method="POST"
+		<form action="${pageContext.request.contextPath}/UserServlet" method="GET"
 				class="d-flex flex-column gap-3 w-50 m-auto"
 				>
 				<input type="hidden" name="id" value="${user.idUsuario}"/>

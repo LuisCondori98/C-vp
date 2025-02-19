@@ -1,11 +1,9 @@
 package servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +30,16 @@ public class LoginServlet extends HttpServlet {
 		switch(btn) {
 		
 			case "Ingresar" : login(req, res); break;
+			case "Logout" : logout(req, res); break;
 		}
+	}
+
+	private void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		session.removeAttribute("userss");
+		
+		res.sendRedirect("/ProyectoFinal/jsp/index.jsp");
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -49,12 +56,16 @@ public class LoginServlet extends HttpServlet {
 		
 		Usuario user = usuarioModel.logUsuario(lgdto);
 		
-		System.out.println(lgdto);
+		HttpSession session = req.getSession();
+		session.setAttribute("userss", user);
 		
-		//HttpSession session = req.getSession();
-		//session.setAttribute("users", user);
-		
-		req.setAttribute("users", user);
-		req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+		if(user != null) {
+			
+			res.sendRedirect("/ProyectoFinal/jsp/profile.jsp");
+		} else {
+			
+			req.setAttribute("mensaje", "Error, usuario o contraseña erronea");
+			req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+		}
 	}
 }

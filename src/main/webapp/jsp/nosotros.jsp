@@ -6,17 +6,17 @@
 	        <p>Nos diferenciamos por nuestro trato humano, personalizado y ético, brindando un servicio que cumple con los más altos estándares de calidad y seguridad.</p>
 	
 	        <div class="mision-vision">
-	            <div class="mision">
+	            <div class="mision" data-aos="fade-up">
 	                <h3>Misión</h3>
 	                <p>Brindar atención médica de excelencia, con un enfoque humano y tecnológico, promoviendo la salud y el bienestar de nuestros pacientes.</p>
 	            </div>
-	            <div class="vision">
+	            <div class="vision" data-aos="fade-down">
 	                <h3>Visión</h3>
 	                <p>Ser la clínica líder en el cuidado de la salud, reconocida por nuestra calidad, innovación y compromiso con la comunidad.</p>
 	            </div>
 	        </div>
 	
-	        <div class="valores">
+	        <div class="valores" data-aos="fade-left">
 	            <h3>Nuestros Valores</h3>
 	            <ul>
 	                <li>Compromiso</li>
@@ -27,7 +27,7 @@
 	            </ul>
 	        </div>
 	
-	        <div class="equipo">
+	        <div class="equipo" data-aos="fade-down-right">
 	            <h3>Nuestro Equipo Médico</h3>
 	            <div class="equipo-cards">
 	                <div class="equipo-card">

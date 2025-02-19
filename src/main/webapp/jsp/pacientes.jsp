@@ -11,12 +11,14 @@
 					<h6><strong>Direccion:</strong> ${paciente.direccionUsuario}</h6>
 					<h6><strong>Correo:</strong> ${paciente.correoUsuario}</h6>
 					<h6><strong>Fecha Nac:</strong> ${paciente.fechaNac} (año-mes-dia)</h6>
-					<a href="/AdminServlet?types=modificar&id=${paciente.idUsuario}" class="btn btn-success">Editar</a>
+					<a href="${pageContext.request.contextPath}/UserServlet?type=Buscar&id=${paciente.idUsuario}" class="btn btn-success">Editar</a>
+					<a href="${pageContext.request.contextPath}/UserServlet?type=Eliminar&id=${paciente.idUsuario}" class="btn btn-danger">Eliminar</a>
 				</div>
 				</j:forEach>
 			</j:if>
 		</div>
    	</main>
+   	<a href="${pageContext.request.contextPath}/jsp/crearuser.jsp" class="btn btn-primary">Registrar Paciente</a>
 <script src="${pageContext.request.contextPath}/js/doctores.js">
 </script>
 <%@ include file="footer.jsp" %>

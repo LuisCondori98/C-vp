@@ -83,13 +83,41 @@ public class UserServlet extends HttpServlet {
 	private void modificarUsuario(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 		int id = Integer.parseInt(req.getParameter("id"));
-				
-		System.out.println(id);
+		int dni = Integer.parseInt(req.getParameter("dni"));
+		String nombre = req.getParameter("nombre");
+		String apellido = req.getParameter("apellido");
+		int telefono = Integer.parseInt(req.getParameter("telefono"));
+		String direccion = req.getParameter("direccion");
+		String correo = req.getParameter("correo");
+		LocalDate fechaNac = LocalDate.parse(req.getParameter("fechaNac"));
+		
+		Usuario usuario = new Usuario();
+		
+		usuario.setIdUsuario(id);
+		usuario.setDniUsuario(dni);
+		usuario.setNombreUsuario(nombre);
+		usuario.setApellidoUsuario(apellido);
+		usuario.setTelefonoUsuario(telefono);
+		usuario.setDireccionUsuario(direccion);
+		usuario.setCorreoUsuario(correo);
+		usuario.setFechaNac(fechaNac);
+		
+		UsuarioModelo usuarioModelo = new UsuarioModelo();
+		
+		usuarioModelo.updateUsuario(usuario);
+		
+		req.getRequestDispatcher("/jsp/profile.jsp").forward(req, res);
 	}
 
 	private void eliminarUsuario(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+		int id = Integer.parseInt(req.getParameter("id"));
 		
+		UsuarioModelo usuarioModelo = new UsuarioModelo();
+		
+		usuarioModelo.deleteUsuario(id);
+		
+		req.getRequestDispatcher("/AdminServlet?types=pacientes").forward(req, res);
 	}
 
 	private void buscarUsuario(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

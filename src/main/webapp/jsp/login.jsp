@@ -1,13 +1,16 @@
 <%@ include file="header.jsp" %>
 	<main>
-		<section id="contacto" class="container py-5 text-center">
+		<h3 class="bg-danger text-white text-center">${mensaje}</h3>
+		<section id="contacto" class="container py-5 text-center w-25">
 		    <h2 class="text-center mb-4">Login</h2>
 			<form action="${pageContext.request.contextPath}/LoginServlet" method="POST">
 		        <div class="mb-3">
-		            <input type="email" name="correo" placeholder="Correo" required/>
+		        	<label for="correo" class="form-label">Correo</label>
+		            <input type="email" class="form-control" name="correo" placeholder="Correo" required/>
 		        </div>
 		        <div class="mb-3">
-		            <input type="password" name="password" placeholder="Contraseña" required/>
+		        	<label for="password" class="form-label">Contraseña</label>
+		            <input type="password" class="form-control" name="password" placeholder="Contraseña" required/>
 		        </div>
 		        <input type="submit" name="type" value="Ingresar" id="login" class="btn btn-primary" />
 		    </form>
@@ -16,7 +19,6 @@
 	    <section>
 	    	<j:if test="${not empty users}">
 		    	<script>
-		    	
 		    		const user = {
 		    				id: "${users.idUsuario}",
 		    				dni: "${users.dniUsuario}",
@@ -28,7 +30,6 @@
 		    				rol: "${users.rolUsuario}",
 		    				fechaNac: "${users.fechaNac}"
 		    		}
-		    		
 		    		localStorage.setItem("user", JSON.stringify(user));
 		    	</script>
 	    	</j:if>
